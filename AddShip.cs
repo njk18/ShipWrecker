@@ -23,6 +23,8 @@ namespace ShipWrecker
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
+            int shipSize = Int32.Parse(req.Query["size"]);
+            bool position = Convert.ToBoolean(req.Query[""]);
 
 
 
