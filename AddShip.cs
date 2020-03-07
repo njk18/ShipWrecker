@@ -18,7 +18,7 @@ namespace ShipWrecker
         {
             log.LogInformation("HTTP request for AddShip.");
 
-
+            //testtttttttttttttttt
 
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["xPosition"]);
