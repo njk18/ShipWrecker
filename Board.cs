@@ -4,7 +4,16 @@ using System.Text;
 
 namespace ShipWrecker
 {
+
+    enum Ship
+    {
+        Carrier,
+        BattleShip
+    }
+
     class Board
     {
+        // Create board
+
     }
 }
