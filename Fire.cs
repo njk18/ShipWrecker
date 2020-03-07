@@ -1,55 +1,46 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace ShipWrecker
 {
-    public static class AddShip
+    public static class Fire
     {
-
-        [FunctionName("AddShip")]
+        [FunctionName("Fire")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("HTTP request for AddShip.");
-
+            log.LogInformation("The player has hit a cell");
 
             Guid gameID = Guid.Parse(req.Query["gameID"]);
-            string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
-            int shipSize = Int32.Parse(req.Query["size"]);
-
-            // False = 0 : horizontal; True = 1 : vertical
-            bool alignment = Convert.ToBoolean(req.Query["alignment"]);
+            int boardSize = Board.boards[gameID].getBoardSize();
 
 
-            if (shipSize == 1)
+            for (int x = 0; x < boardSize; x++)
             {
-
-                
-
-
-            } else
-            {
-                if (!alignment)
+                for(int y = 0; y < boardSize; y++)
                 {
-                    // horizontal
 
+                    if(Board.boards[gameID].getBattleGround()[x, y] == null) { 
 
-                }
-                else
-                {
+                    }
 
                 }
             }
 
+                  //  Board.boards[gameID];
 
+
+            return new OkObjectResult(responseMessage);
         }
     }
 }

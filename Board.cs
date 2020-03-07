@@ -29,6 +29,16 @@ namespace ShipWrecker
             this.battleGround = new Tile[boardSize, boardSize];
         }
 
+        public int getBoardSize()
+        {
+            return this.boardSize;
+        }
+
+        public Tile[,] getBattleGround()
+        {
+            return this.battleGround;
+        }
+
 
     }
 }
