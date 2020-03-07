@@ -6,10 +6,16 @@ using System.Text;
 namespace ShipWrecker
 {
 
+    /*  TODO
+     *  
+     *  - Handle adding ship on edge when shipSize > 1
+     * 
+     */
+
     class Board
     {
         // Map of all boards that are currently being used to play an instance of the game
-        public static IDictionary<int, Board> boards = new Dictionary<int, Board>();
+        public static IDictionary<Guid, Board> boards = new Dictionary<Guid, Board>();
 
 
         private int boardSize;

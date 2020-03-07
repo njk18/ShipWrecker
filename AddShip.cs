@@ -19,13 +19,35 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for AddShip.");
 
 
-
+            int gameID = Int32.Parse(req.Query["gameID"]);
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int shipSize = Int32.Parse(req.Query["size"]);
-            bool position = Convert.ToBoolean(req.Query[""]);
 
+            // False = 0 : horizontal; True = 1 : vertical
+            bool alignment = Convert.ToBoolean(req.Query["alignment"]);
+
+
+            if (shipSize == 1)
+            {
+
+                
+
+
+            } else
+            {
+                if (!alignment)
+                {
+                    // horizontal
+
+
+                }
+                else
+                {
+
+                }
+            }
 
 
         }
