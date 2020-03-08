@@ -15,7 +15,7 @@ namespace ShipWrecker
         
 
         [FunctionName("Fire")]
-        public async Task<IActionResult> Run(
+        public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -28,7 +28,7 @@ namespace ShipWrecker
 
             Board currentBoard = Board.boards[gameID];
 
-            String[] responseSate = new String[2];
+            response.turn = true;
 
             switch (currentBoard.getBattleGround()[xPosition, yPosition].shipState)
             {
@@ -36,6 +36,8 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
+                        response.turn = false;
+
                         break;
                     }
                    
@@ -43,6 +45,8 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit ;
+                        response.turn = false;
+
                         break;
                     }
                   
@@ -59,8 +63,7 @@ namespace ShipWrecker
 
                     break;
             }
-            response.turn = true;
-           
+            
             // Return a JSON response
             var fireResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
             return (ActionResult)new OkObjectResult(fireResponse);
