@@ -31,37 +31,46 @@ namespace ShipWrecker
             // False = 0 : horizontal; True = 1 : vertical
             bool shipRotation = bool.Parse(req.Query["shipRotation"]);
 
+            // Prepare response container;
+            AddShipResponse response = new AddShipResponse();
+
             Ship s = new Ship(shipRotation, shipType, xPosition, yPosition, stateType);
 
-            if(CheckShipPosition(s.shipSize,xPosition,yPosition,shipRotation, gameID) == false)
-                return null;
-            else {
-                if(shipRotation)
+            if (CheckShipPosition(s.shipSize, xPosition, yPosition, shipRotation, gameID) == false)
+            {
+                response.addShipStatus = false;
+                var failResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return (ActionResult)new OkObjectResult(failResponse);
+            }
+            else
+            {
+                if (shipRotation)
                 {
-                    for(int i = 0 ; i < s.shipSize ; i++)
+                    for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] =  new Ship(shipRotation, shipType, xPosition + i, yPosition,stateType);
-                    
+                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition, stateType);
+
                     }
                 }
-                else{
-                      for(int i = 0 ; i < s.shipSize ; i++)
-                      {
-                       
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition+1] = new Ship(shipRotation, shipType, xPosition + i, yPosition,stateType);
-                      }
+                else
+                {
+                    for (int i = 0; i < s.shipSize; i++)
+                    {
+
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + 1] = new Ship(shipRotation, shipType, xPosition + i, yPosition, stateType);
+                    }
                 }
             }
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            return (ActionResult)new OkObjectResult(s);
-          
+            response.addShipStatus = true;
+            var successResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+            return (ActionResult)new OkObjectResult(successResponse);
+            
         }
 
           public static bool CheckShipPosition(int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameID)
-        {
+          {
 
             Board currentBoard = Board.boards[gameID];
 
