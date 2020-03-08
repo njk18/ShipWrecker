@@ -7,7 +7,7 @@ namespace ShipWrecker
 
     public class Ship
     {
-
+        //test change
         public int shipSize { get; private set; }
 
         private ShipType shipType { get { return this.shipType; } set { this.shipType = value; } }
