@@ -19,13 +19,17 @@ namespace ShipWrecker
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
 
-            bool shipRotation = bool.Parse(req.Query["shipRotation"]);
+            log.LogInformation("HTTP request for AddShip.");
+
+            Guid gameID = Guid.Parse(req.Query["gameID"]);
             string shipSize = req.Query["shipType"];
             int PositionX = Int32.Parse(req.Query["x"]);
             int PositionY = Int32.Parse(req.Query["y"]);
             string stateType = req.Query["state"];
+          
+            // False = 0 : horizontal; True = 1 : vertical
+            bool shipRotation = bool.Parse(req.Query["shipRotation"]);
 
             Ship s = new Ship(shipRotation, shipSize, PositionX, PositionY, stateType);
 
@@ -53,6 +57,7 @@ namespace ShipWrecker
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             return (ActionResult)new OkObjectResult(s);// shipRotation + " " + shipSize + " " + x + " " + y);
+          
         }
     }
 }
