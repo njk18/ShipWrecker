@@ -12,7 +12,7 @@ namespace ShipWrecker
 {
    public class Fire
     {
-        public Ship.ShipState state ;
+        
 
         [FunctionName("Fire")]
         public async Task<IActionResult> Run(
@@ -20,7 +20,7 @@ namespace ShipWrecker
             ILogger log)
         {
             log.LogInformation("The player has hit a cell");
-
+            FireResponse response = new FireResponse();
             Guid gameID = Guid.Parse(req.Query["gameID"]);
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
@@ -35,14 +35,14 @@ namespace ShipWrecker
                 case Ship.ShipState.noShip:
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
-                        state = Ship.ShipState.shipMiss;
+                        response.state = Ship.ShipState.shipMiss ;
                         break;
                     }
                    
                 case Ship.ShipState.ship:
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
-                        state = Ship.ShipState.shipHit;
+                        response.state = Ship.ShipState.shipHit ;
                         break;
                     }
                   
@@ -59,11 +59,11 @@ namespace ShipWrecker
 
                     break;
             }
-
+            response.turn = true;
            
             // Return a JSON response
-            var response = JsonConvert.SerializeObject(responseSate, Formatting.Indented);
-            return (ActionResult)new OkObjectResult(response);
+            var fireResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+            return (ActionResult)new OkObjectResult(fireResponse);
         }
     }
 }

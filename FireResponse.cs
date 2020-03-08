@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace ShipWrecker
 {
- 
+
     public class FireResponse
     {
         public bool turn { get; set; }
@@ -22,24 +22,12 @@ namespace ShipWrecker
             this.state = state;
         }
 
-        [FunctionName("Fire")]
-        public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        public FireResponse()
         {
-            bool turn = bool.Parse(req.Query["turn"]);
-            Ship.ShipState state = Ship.ShipState.shipHit; //  Fire.state ; // req.Query[""];
 
-           
-            FireResponse responseState = new FireResponse(turn, state);
-
-            
-
-
-            // Return a JSON response
-            var response = JsonConvert.SerializeObject(responseState, Formatting.Indented);
-            return (ActionResult)new OkObjectResult(response);
         }
+
+
 
     }
 }
