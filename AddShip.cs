@@ -5,51 +5,59 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ShipWrecker
 {
     public static class AddShip
     {
 
-        [FunctionName("AddShip")]
+     
+        [FunctionName("addShip")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+
             log.LogInformation("HTTP request for AddShip.");
 
-
             Guid gameID = Guid.Parse(req.Query["gameID"]);
-            string shipType = req.Query["shipType"];
-            int xPosition = Int32.Parse(req.Query["xPosition"]);
-            int yPosition = Int32.Parse(req.Query["yPosition"]);
-            int shipSize = Int32.Parse(req.Query["size"]);
-
+            string shipSize = req.Query["shipType"];
+            int PositionX = Int32.Parse(req.Query["x"]);
+            int PositionY = Int32.Parse(req.Query["y"]);
+            string stateType = req.Query["state"];
+          
             // False = 0 : horizontal; True = 1 : vertical
-            bool alignment = Convert.ToBoolean(req.Query["alignment"]);
+            bool shipRotation = bool.Parse(req.Query["shipRotation"]);
 
+            Ship s = new Ship(shipRotation, shipSize, PositionX, PositionY, stateType);
 
-            if (shipSize == 1)
-            {
-
-                
-
-
-            } else
-            {
-                if (!alignment)
+          
+            if(s.CheckShipPosition(PositionX,PositionY,shipRotation) == false)
+                return null;
+            else {
+                if(shipRotation)
                 {
-                    // horizontal
-
-
+                    for(int i = 0 ; i < s.shipSize ; i++)
+                    {    s = new Ship(shipRotation, shipSize, PositionX + i, PositionY,stateType);
+           //   Board.board.getBattleGround()[PositionX+1, PostionY] = new Ship(true, "carrier", PositionX, PostionY, "smthg");
+                    
+                    }
                 }
-                else
-                {
-
+                else{
+                      for(int i = 0 ; i < s.shipSize ; i++)
+                      {
+                       s = new Ship(shipRotation, shipSize, PositionX + i, PositionY,stateType);
+           //   Board.board.getBattleGround()[PositionX, PostionY+1] = new Ship(true, "carrier", PositionX, PostionY, "smthg");
+                      }
                 }
             }
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-
+            return (ActionResult)new OkObjectResult(s);// shipRotation + " " + shipSize + " " + x + " " + y);
+          
         }
     }
 }
