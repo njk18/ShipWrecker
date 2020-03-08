@@ -38,7 +38,7 @@ namespace ShipWrecker
             for(int i= 0; i < boardSize;i++)
                 for(int j =0; j < boardSize; j++)
                 {
-                    battleGround[i,j] = new Ship(true, "carrier",i,j,"smthg");
+                    this.battleGround[i,j] = new Ship(true, "carrier",i,j,"smthg");
                 }
         }
 
@@ -46,12 +46,6 @@ namespace ShipWrecker
         {
             return this.boardSize;
         }
-
-        public Tile[,] getBattleGround()
-        {
-            return this.battleGround;
-        }
-
 
     }
 }
