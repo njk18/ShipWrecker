@@ -23,9 +23,9 @@ namespace ShipWrecker
         public bool shipRotation { get; private set; }
         private int xPosition { get; set; }
         private int yPosition { get; set; }
-        private ShipState shipState { get; set; }
+        public ShipState shipState { get; set; }
 
-        private enum ShipType
+        public enum ShipType
         {
             Carrier = 5,
             Battleship = 4,
@@ -34,7 +34,7 @@ namespace ShipWrecker
             Destroyer = 1
         }
 
-        private enum ShipState
+        public enum ShipState
         {
             shipHit,
             shipMiss,
