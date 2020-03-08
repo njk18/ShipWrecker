@@ -10,10 +10,12 @@ using Newtonsoft.Json;
 
 namespace ShipWrecker
 {
-    public static class Fire
+   public class Fire
     {
+        public Ship.ShipState state ;
+
         [FunctionName("Fire")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -33,14 +35,15 @@ namespace ShipWrecker
                 case Ship.ShipState.noShip:
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
-
-                         break;
+                        state = Ship.ShipState.shipMiss;
+                        break;
                     }
                    
                 case Ship.ShipState.ship:
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
-                          break;
+                        state = Ship.ShipState.shipHit;
+                        break;
                     }
                   
                 case Ship.ShipState.shipHit:
@@ -57,7 +60,7 @@ namespace ShipWrecker
                     break;
             }
 
-
+           
             // Return a JSON response
             var response = JsonConvert.SerializeObject(responseSate, Formatting.Indented);
             return (ActionResult)new OkObjectResult(response);
