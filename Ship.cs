@@ -44,7 +44,7 @@ namespace ShipWrecker
 
         public Ship()
         {
-            this.shipState = noShip;
+            this.shipState = ShipState.noShip;
         }
   
 
