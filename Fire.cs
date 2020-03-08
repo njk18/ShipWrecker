@@ -26,7 +26,9 @@ namespace ShipWrecker
 
             Board currentBoard = Board.boards[gameID];
 
-            switch(currentBoard.getBattleGround()[xPosition, yPosition].shipState)
+            String[] responseSate = new String[2];
+
+            switch (currentBoard.getBattleGround()[xPosition, yPosition].shipState)
             {
                 case Ship.ShipState.noShip:
                     {
@@ -56,7 +58,8 @@ namespace ShipWrecker
             }
 
 
-            return new OkObjectResult(responseMessage);
+            var response = JsonConvert.SerializeObject(responseSate, Formatting.Indented);
+            return (ActionResult)new OkObjectResult(response);
         }
     }
 }
