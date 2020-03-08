@@ -77,28 +77,7 @@ namespace ShipWrecker
             }
         }
 
-        public bool CheckShipPosition(int xPosition, int yPosition, bool shipRotation)
-        {
-            int boardSize = 8;
-            for (int i = 0; i < shipSize; i++)
-            {
-                if (shipRotation) //horizontal
-                {
-                    if (xPosition + i >= boardSize)
-                        return false;
-                    else if (Board.board[GetGameID].getBattleGround()[xPosition + i, yPosition].getShipSate() != ShipState.noShip)
-                        return false;
-                }
-                else
-                {
-                    if (yPosition + i >= boardSize)
-                        return false;
-                    else if (Board.board[GetGameID].getBattleGround()[xPosition, yPosition + i].getShipSate() != ShipState.noShip)
-                        return false;
-                }
-            }
-            return true;
-        }
+      
 
 
 

@@ -33,8 +33,7 @@ namespace ShipWrecker
 
             Ship s = new Ship(shipRotation, shipType, xPosition, yPosition, stateType);
 
-          
-            if(s.CheckShipPosition(xPosition,yPosition,shipRotation) == false)
+            if(CheckShipPosition(s.shipSize,xPosition,yPosition,shipRotation, gameId) == false)
                 return null;
             else {
                 if(shipRotation)
@@ -59,6 +58,29 @@ namespace ShipWrecker
 
             return (ActionResult)new OkObjectResult(s);
           
+        }
+
+          public static bool CheckShipPosition(int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameId)
+        {
+          
+            for (int i = 0; i < shipSize; i++)
+            {
+                if (shipRotation) //horizontal
+                {
+                    if (xPosition + i >= boardSize)
+                        return false;
+                    else if (Board.board[gameID].getBattleGround()[xPosition + i, yPosition].shipSate != ShipState.noShip)
+                        return false;
+                }
+                else
+                {
+                    if (yPosition + i >= boardSize)
+                        return false;
+                    else if (Board.board[gameID].getBattleGround()[xPosition, yPosition + i].shipSate != ShipState.noShip)
+                        return false;
+                }
+            }
+            return true;
         }
     }
 }
