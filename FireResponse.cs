@@ -24,7 +24,6 @@ namespace ShipWrecker
 
         public FireResponse()
         {
-
         }
 
 
