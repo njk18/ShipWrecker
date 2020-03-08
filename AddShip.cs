@@ -26,7 +26,7 @@ namespace ShipWrecker
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["x"]);
             int yPosition = Int32.Parse(req.Query["y"]);
-            string stateType = req.Query["state"];
+           
           
             // False = 0 : horizontal; True = 1 : vertical
             bool shipRotation = bool.Parse(req.Query["shipRotation"]);
@@ -34,7 +34,7 @@ namespace ShipWrecker
             // Prepare response container;
             AddShipResponse response = new AddShipResponse();
 
-            Ship s = new Ship(shipRotation, shipType, xPosition, yPosition, stateType);
+            Ship s = new Ship(shipRotation, shipType, xPosition, yPosition);
 
             if (CheckShipPosition(s.shipSize, xPosition, yPosition, shipRotation, gameID) == false)
             {
@@ -49,7 +49,7 @@ namespace ShipWrecker
                     for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition, stateType);
+                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
 
                     }
                 }
@@ -58,14 +58,15 @@ namespace ShipWrecker
                     for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + 1] = new Ship(shipRotation, shipType, xPosition + i, yPosition, stateType);
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + 1] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
                     }
                 }
-            }
 
-            response.addShipStatus = true;
-            var successResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
-            return (ActionResult)new OkObjectResult(successResponse);
+
+                response.addShipStatus = true;
+                var successResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return (ActionResult)new OkObjectResult(successResponse);
+            }
             
         }
 

@@ -41,13 +41,13 @@ namespace ShipWrecker
         }
   
 
-        public Ship(bool shipRotation, string shipName, int x, int y, string stateType)
+        public Ship(bool shipRotation, string shipName, int x, int y)
         {
             this.shipType = (ShipType)System.Enum.Parse(typeof(ShipType), shipName);
             this.shipRotation = shipRotation;
             this.xPosition = x;
             this.yPosition = y;
-            this.shipState = (ShipState)System.Enum.Parse(typeof(ShipState), stateType);
+            this.shipState = (ShipState)ShipState.ship;  
 
             switch (this.shipType)
             {

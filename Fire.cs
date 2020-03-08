@@ -55,13 +55,13 @@ namespace ShipWrecker
                      * the user must have clicked on the tile of a ship he's already hit.
                      * 
                      */
-                    response.state = Ship.ShipState.noShip;
+                    response.state = Ship.ShipState.shipHit;
                     response.keepTurn = true;
 
                     break;
                 case Ship.ShipState.shipMiss:
                     // Return miss, you hit water!
-                    response.state = Ship.ShipState.ship;
+                    response.state = Ship.ShipState.shipMiss;
                     response.keepTurn = true;
 
                     break;
