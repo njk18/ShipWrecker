@@ -24,15 +24,31 @@ namespace ShipWrecker
             bool shipRotation = bool.Parse(req.Query["shipRotation"]);
             string shipSize = req.Query["shipType"];
             int PositionX = Int32.Parse(req.Query["x"]);
-            int PostionY = Int32.Parse(req.Query["y"]);
+            int PositionY = Int32.Parse(req.Query["y"]);
             string stateType = req.Query["state"];
-            Ship s = new Ship(shipRotation, shipSize, PositionX, PostionY,stateType);
 
-         //   Board.board.getBattleGround()[PositionX, PostionY] = new Ship(true, "carrier", PositionX, PostionY, "smthg");
+            Ship s = new Ship(shipRotation, shipSize, PositionX, PositionY, stateType);
 
-
-
-
+          
+            if(s.CheckShipPosition(PositionX,PositionY,shipRotation) == false)
+                return null;
+            else {
+                if(shipRotation)
+                {
+                    for(int i = 0 ; i < s.shipSize ; i++)
+                    {    s = new Ship(shipRotation, shipSize, PositionX + i, PositionY,stateType);
+           //   Board.board.getBattleGround()[PositionX+1, PostionY] = new Ship(true, "carrier", PositionX, PostionY, "smthg");
+                    
+                    }
+                }
+                else{
+                      for(int i = 0 ; i < s.shipSize ; i++)
+                      {
+                       s = new Ship(shipRotation, shipSize, PositionX + i, PositionY,stateType);
+           //   Board.board.getBattleGround()[PositionX, PostionY+1] = new Ship(true, "carrier", PositionX, PostionY, "smthg");
+                      }
+                }
+            }
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
