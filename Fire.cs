@@ -36,7 +36,7 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
-                        response.turn = false;
+                        response.keepTurn = false;
 
                         break;
                     }
@@ -45,7 +45,7 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
-                        response.turn = false;
+                        response.keepTurn = false;
 
                         break;
                     }
@@ -55,14 +55,14 @@ namespace ShipWrecker
                      * the user must have clicked on the tile of a ship he's already hit.
                      * 
                      */
-                    response.state = Ship.ShipState.shipHit;
-                    response.turn = true;
+                    response.state = Ship.ShipState.noShip;
+                    response.keepTurn = true;
 
                     break;
                 case Ship.ShipState.shipMiss:
                     // Return miss, you hit water!
-                    response.state = Ship.ShipState.shipMiss;
-                    response.turn = false;
+                    response.state = Ship.ShipState.ship;
+                    response.keepTurn = true;
 
                     break;
             }
