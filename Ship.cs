@@ -17,15 +17,15 @@ namespace ShipWrecker
             private set { this.shipSize = value; }
         }
 
-        private ShipType shipType { get { return this.shipType; } set { this.shipType = value; } }
+        public ShipType shipType { get { return this.shipType; } set { this.shipType = value; } }
 
         // False = 0 : horizontal; True = 1 : vertical
         public bool shipRotation { get; private set; }
         private int positionX { get; set; }
         private int positionY { get; set; }
-        private ShipState shipState { get; set; }
+        public ShipState shipState { get; set; }
 
-        private enum ShipType
+        public enum ShipType
         {
             Carrier = 5,
             Battleship = 4,
@@ -34,7 +34,7 @@ namespace ShipWrecker
             Destroyer = 1
         }
 
-        private enum ShipState
+        public enum ShipState
         {
             shipHit,
             shipMiss,

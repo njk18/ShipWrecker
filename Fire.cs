@@ -24,19 +24,27 @@ namespace ShipWrecker
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID].getBoardSize();
 
-
-            for (int x = 0; x < boardSize; x++)
+            switch(Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState)
             {
-                for(int y = 0; y < boardSize; y++)
-                {
+                case Ship.ShipState.noShip:
 
-                    if(Board.boards[gameID].getBattleGround()[x, y] == null) { 
+                    break;
+                case Ship.ShipState.ship:
 
-                    }
+                    break;
+                case Ship.ShipState.shipHit:
+                    /* This ship is already hit, the click is redundant. To get to this case,
+                     * the user must have clicked on the tile of a ship he's already hit.
+                     * 
+                     */
 
-                }
+
+                    break;
+                case Ship.ShipState.shipMiss:
+                    // Return miss, you hit water!
+
+                    break;
             }
-
 
 
             return new OkObjectResult(responseMessage);
