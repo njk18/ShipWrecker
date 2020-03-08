@@ -33,15 +33,15 @@ namespace ShipWrecker
 
             Ship s = new Ship(shipRotation, shipType, xPosition, yPosition, stateType);
 
-            if(CheckShipPosition(s.shipSize,xPosition,yPosition,shipRotation, gameId) == false)
+            if(CheckShipPosition(s.shipSize,xPosition,yPosition,shipRotation, gameID) == false)
                 return null;
             else {
                 if(shipRotation)
                 {
                     for(int i = 0 ; i < s.shipSize ; i++)
-                    {   
-                     
-                       Board.boards[gameID].getBattleGround()[xPosition+1, yPosition] =  new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
+                    {
+
+                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] =  new Ship(shipRotation, shipType, xPosition + i, yPosition,stateType);
                     
                     }
                 }
@@ -49,7 +49,7 @@ namespace ShipWrecker
                       for(int i = 0 ; i < s.shipSize ; i++)
                       {
                        
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition+1] = new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition+1] = new Ship(shipRotation, shipType, xPosition + i, yPosition,stateType);
                       }
                 }
             }
