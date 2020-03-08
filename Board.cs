@@ -26,6 +26,7 @@ namespace ShipWrecker
         {
             boardSize = 8;
             this.battleGround = new Ship[boardSize, boardSize];
+            createBoard();
         }
 
         public Ship[,] getBattleGround()
@@ -33,12 +34,12 @@ namespace ShipWrecker
             return this.battleGround;
         }
 
-        public void check()
+        public void createBoard()
         {
             for(int i= 0; i < boardSize;i++)
                 for(int j =0; j < boardSize; j++)
                 {
-                    this.battleGround[i,j] = new Ship(true, "carrier",i,j,"smthg");
+                    this.battleGround[i,j] = new Ship();
                 }
         }
 
