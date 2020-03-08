@@ -58,6 +58,7 @@ namespace ShipWrecker
             }
 
 
+            // Return a JSON response
             var response = JsonConvert.SerializeObject(responseSate, Formatting.Indented);
             return (ActionResult)new OkObjectResult(response);
         }
