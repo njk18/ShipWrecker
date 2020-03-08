@@ -16,7 +16,7 @@ namespace ShipWrecker
 
         [FunctionName("Fire")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("The player has hit a cell");
@@ -49,22 +49,27 @@ namespace ShipWrecker
 
                         break;
                     }
-                  
+
                 case Ship.ShipState.shipHit:
-                    /* This ship is already hit, the click is redundant. To get to this case,
-                     * the user must have clicked on the tile of a ship he's already hit.
-                     * 
-                     */
-                    response.state = Ship.ShipState.shipHit;
-                    response.keepTurn = true;
+                    {
+                        /* This ship is already hit, the click is redundant. To get to this case,
+                         * the user must have clicked on the tile of a ship he's already hit.
+                         * 
+                         */
+                        response.state = Ship.ShipState.shipHit;
+                        response.keepTurn = true;
 
-                    break;
+                        break;
+                    }
                 case Ship.ShipState.shipMiss:
-                    // Return miss, you hit water!
-                    response.state = Ship.ShipState.shipMiss;
-                    response.keepTurn = true;
+                    {
+                        // Return miss, you hit water!
+                        response.state = Ship.ShipState.shipMiss;
+                        response.keepTurn = true;
 
-                    break;
+                        break;
+                    }
+
             }
             
             // Return a JSON response
