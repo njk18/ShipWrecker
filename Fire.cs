@@ -49,22 +49,27 @@ namespace ShipWrecker
 
                         break;
                     }
-                  
+
                 case Ship.ShipState.shipHit:
-                    /* This ship is already hit, the click is redundant. To get to this case,
-                     * the user must have clicked on the tile of a ship he's already hit.
-                     * 
-                     */
-                    response.state = Ship.ShipState.noShip;
-                    response.keepTurn = true;
+                    {
+                        /* This ship is already hit, the click is redundant. To get to this case,
+                         * the user must have clicked on the tile of a ship he's already hit.
+                         * 
+                         */
+                        response.state = Ship.ShipState.shipHit;
+                        response.keepTurn = true;
 
-                    break;
+                        break;
+                    }
                 case Ship.ShipState.shipMiss:
-                    // Return miss, you hit water!
-                    response.state = Ship.ShipState.ship;
-                    response.keepTurn = true;
+                    {
+                        // Return miss, you hit water!
+                        response.state = Ship.ShipState.shipMiss;
+                        response.keepTurn = true;
 
-                    break;
+                        break;
+                    }
+
             }
             
             // Return a JSON response
