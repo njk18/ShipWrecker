@@ -8,7 +8,14 @@ namespace ShipWrecker
     public class Ship
     {
         //test change
-        public int shipSize { get; private set; }
+        public int shipSize {
+            get
+            {
+                return this.shipSize;
+            }
+
+            private set { this.shipSize = value; }
+        }
 
         private ShipType shipType { get { return this.shipType; } set { this.shipType = value; } }
 
@@ -23,8 +30,8 @@ namespace ShipWrecker
             Carrier = 5,
             Battleship = 4,
             Cruiser = 3,
-            Submarine = 3,
-            Destroyer = 2
+            Submarine = 2,
+            Destroyer = 1
         }
 
         private enum ShipState
@@ -44,7 +51,25 @@ namespace ShipWrecker
             this.positionX = x;
             this.positionY = y;
             this.shipState = (ShipState)System.Enum.Parse(typeof(ShipState), stateType);
-            int shipSize = (int) Type;
+
+            switch(this.shipType)
+            {
+                case ShipType.Destroyer:
+                    this.shipSize = (int)ShipType.Destroyer;
+                    break;
+                case ShipType.Submarine:
+                    this.shipSize = (int)ShipType.Submarine;
+                    break;
+                case ShipType.Cruiser:
+                    this.shipSize = (int)ShipType.Cruiser;
+                    break;
+                case ShipType.Battleship:
+                    this.shipSize = (int)ShipType.Battleship;
+                    break;
+                case ShipType.Carrier:
+                    this.shipSize = (int)ShipType.Carrier;
+                    break;
+            }
         }
 
         public bool CheckShipPosition(int PositionX, int PositionY, bool shipRotation)

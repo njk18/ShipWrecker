@@ -37,7 +37,6 @@ namespace ShipWrecker
                 }
             }
 
-                  //  Board.boards[gameID];
 
 
             return new OkObjectResult(responseMessage);
