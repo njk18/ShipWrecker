@@ -24,11 +24,11 @@ namespace ShipWrecker
             Guid gameID = Guid.Parse(req.Query["gameID"]);
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
-            int boardSize = Board.boards[gameID].getBoardSize();
+            int boardSize = Board.boards[gameID].boardSize;
 
             Board currentBoard = Board.boards[gameID];
 
-            response.turn = true;
+            response.keepTurn = true;
 
             switch (currentBoard.getBattleGround()[xPosition, yPosition].shipState)
             {
@@ -44,7 +44,7 @@ namespace ShipWrecker
                 case Ship.ShipState.ship:
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
-                        response.state = Ship.ShipState.shipHit ;
+                        response.state = Ship.ShipState.shipHit;
                         response.turn = false;
 
                         break;
@@ -55,11 +55,14 @@ namespace ShipWrecker
                      * the user must have clicked on the tile of a ship he's already hit.
                      * 
                      */
-
+                    response.state = Ship.ShipState.shipHit;
+                    response.turn = true;
 
                     break;
                 case Ship.ShipState.shipMiss:
                     // Return miss, you hit water!
+                    response.state = Ship.ShipState.shipMiss;
+                    response.turn = false;
 
                     break;
             }

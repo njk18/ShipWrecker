@@ -17,14 +17,14 @@ namespace ShipWrecker
         // Map of all boards that are currently being used to play an instance of the game  
         public static IDictionary<Guid, Board> boards = new Dictionary<Guid, Board>();
 
-        private int boardSize;
+        public int boardSize { get; private set; }
 
         // Create board which is a 2D array of Tiles
         Ship[,] battleGround;
 
         public Board(int boardSize)
         {
-            boardSize = 8;
+            this.boardSize = 8;
             this.battleGround = new Ship[boardSize, boardSize];
             createBoard();
         }
@@ -41,11 +41,6 @@ namespace ShipWrecker
                 {
                     this.battleGround[i,j] = new Ship();
                 }
-        }
-
-        public int getBoardSize()
-        {
-            return this.boardSize;
         }
 
     }

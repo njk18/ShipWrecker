@@ -22,7 +22,7 @@ namespace ShipWrecker
 
             log.LogInformation("HTTP request for AddShip.");
 
-            Guid gameID = Guid.Parse(req.Query["gameID"]);
+            Guid gameID = new Guid(req.Query["gameID"]);
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["x"]);
             int yPosition = Int32.Parse(req.Query["y"]);
@@ -79,14 +79,14 @@ namespace ShipWrecker
             {
                 if (shipRotation) //horizontal
                 {
-                    if (xPosition + i >= currentBoard.getBoardSize())
+                    if (xPosition + i >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition + i, yPosition].shipState != Ship.ShipState.noShip)
                         return false;
                 }
                 else
                 {
-                    if (yPosition + i >= currentBoard.getBoardSize())
+                    if (yPosition + i >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition, yPosition + i].shipState != Ship.ShipState.noShip)
                         return false;

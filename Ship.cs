@@ -8,16 +8,9 @@ namespace ShipWrecker
     public class Ship
     {
         //test change
-        public int shipSize {
-            get
-            {
-                return this.shipSize;
-            }
+        public int shipSize { get; set; }
 
-            private set { this.shipSize = value; }
-        }
-
-        private ShipType shipType { get { return this.shipType; } set { this.shipType = value; } }
+        private ShipType shipType { get; set; }
 
         // False = 0 : horizontal; True = 1 : vertical
         public bool shipRotation { get; private set; }
@@ -50,14 +43,13 @@ namespace ShipWrecker
 
         public Ship(bool shipRotation, string shipName, int x, int y, string stateType)
         {
-
             this.shipType = (ShipType)System.Enum.Parse(typeof(ShipType), shipName);
             this.shipRotation = shipRotation;
             this.xPosition = x;
             this.yPosition = y;
             this.shipState = (ShipState)System.Enum.Parse(typeof(ShipState), stateType);
 
-            switch(this.shipType)
+            switch (this.shipType)
             {
                 case ShipType.Destroyer:
                     this.shipSize = (int)ShipType.Destroyer;
@@ -75,6 +67,7 @@ namespace ShipWrecker
                     this.shipSize = (int)ShipType.Carrier;
                     break;
             }
+
         }
 
       

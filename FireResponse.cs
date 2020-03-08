@@ -13,12 +13,12 @@ namespace ShipWrecker
 
     public class FireResponse
     {
-        public bool turn { get; set; }
+        public bool keepTurn { get; set; }
         public Ship.ShipState state { get; set; }
 
         public FireResponse(bool turn, Ship.ShipState state)
         {
-            this.turn = turn;
+            this.keepTurn = turn;
             this.state = state;
         }
 
