@@ -41,7 +41,7 @@ namespace ShipWrecker
                     for(int i = 0 ; i < s.shipSize ; i++)
                     {   
                      
-                       Board.board[gameID].getBattleGround()[xPosition+1, yPosition] =  new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
+                       Board.boards[gameID].getBattleGround()[xPosition+1, yPosition] =  new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
                     
                     }
                 }
@@ -49,7 +49,7 @@ namespace ShipWrecker
                       for(int i = 0 ; i < s.shipSize ; i++)
                       {
                        
-                        Board.board[gameID].getBattleGround()[xPosition, yPosition+1] = new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition+1] = new Ship(shipRotation, shipSize, xPosition + i, yPosition,stateType);
                       }
                 }
             }
@@ -60,23 +60,26 @@ namespace ShipWrecker
           
         }
 
-          public static bool CheckShipPosition(int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameId)
+          public static bool CheckShipPosition(int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameID)
         {
-          
+
+            Board currentBoard = Board.boards[gameID];
+
+
             for (int i = 0; i < shipSize; i++)
             {
                 if (shipRotation) //horizontal
                 {
-                    if (xPosition + i >= boardSize)
+                    if (xPosition + i >= currentBoard.getBoardSize())
                         return false;
-                    else if (Board.board[gameID].getBattleGround()[xPosition + i, yPosition].shipSate != ShipState.noShip)
+                    else if (currentBoard.getBattleGround()[xPosition + i, yPosition].shipState != Ship.ShipState.noShip)
                         return false;
                 }
                 else
                 {
-                    if (yPosition + i >= boardSize)
+                    if (yPosition + i >= currentBoard.getBoardSize())
                         return false;
-                    else if (Board.board[gameID].getBattleGround()[xPosition, yPosition + i].shipSate != ShipState.noShip)
+                    else if (currentBoard.getBattleGround()[xPosition, yPosition + i].shipState != Ship.ShipState.noShip)
                         return false;
                 }
             }

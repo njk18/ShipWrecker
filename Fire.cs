@@ -24,18 +24,20 @@ namespace ShipWrecker
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID].getBoardSize();
 
-            switch(Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState)
+            Board currentBoard = Board.boards[gameID];
+
+            switch(currentBoard.getBattleGround()[xPosition, yPosition].shipState)
             {
                 case Ship.ShipState.noShip:
                     {
-                   Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
+                        currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
 
                          break;
                     }
                    
                 case Ship.ShipState.ship:
                     {
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
+                        currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                           break;
                     }
                   
