@@ -27,11 +27,18 @@ namespace ShipWrecker
             switch(Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState)
             {
                 case Ship.ShipState.noShip:
+                    {
+                   Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
 
-                    break;
+                         break;
+                    }
+                   
                 case Ship.ShipState.ship:
-
-                    break;
+                    {
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
+                          break;
+                    }
+                  
                 case Ship.ShipState.shipHit:
                     /* This ship is already hit, the click is redundant. To get to this case,
                      * the user must have clicked on the tile of a ship he's already hit.
