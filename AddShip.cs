@@ -51,6 +51,9 @@ namespace ShipWrecker
 
                         Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
 
+                        var failResponse = JsonConvert.SerializeObject(Board.boards[gameID], Formatting.Indented);
+                        return (ActionResult)new OkObjectResult(failResponse);
+
                     }
                 }
                 else
