@@ -23,6 +23,7 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for AddShip.");
 
             Guid gameID = new Guid(req.Query["gameID"]);
+
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["x"]);
             int yPosition = Int32.Parse(req.Query["y"]);
@@ -50,9 +51,6 @@ namespace ShipWrecker
                     {
 
                         Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
-
-                        var failResponse = JsonConvert.SerializeObject(Board.boards[gameID], Formatting.Indented);
-                        return (ActionResult)new OkObjectResult(failResponse);
 
                     }
                 }
