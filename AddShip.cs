@@ -76,7 +76,7 @@ namespace ShipWrecker
 
             Board currentBoard = Board.boards[gameID];
 
-
+            
             for (int i = 0; i < shipSize; i++)
             {
                 if (shipRotation) //horizontal
