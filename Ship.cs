@@ -52,19 +52,19 @@ namespace ShipWrecker
             switch (this.shipType)
             {
                 case ShipType.Destroyer:
-                    this.shipSize = (int)ShipType.Destroyer;
+                    this.shipSize = 2;
                     break;
                 case ShipType.Submarine:
-                    this.shipSize = (int)ShipType.Submarine;
+                    this.shipSize = 3; // (int)ShipType.Submarine;
                     break;
                 case ShipType.Cruiser:
-                    this.shipSize = (int)ShipType.Cruiser;
+                    this.shipSize = 3; // (int)ShipType.Cruiser;
                     break;
                 case ShipType.Battleship:
-                    this.shipSize = (int)ShipType.Battleship;
+                    this.shipSize = 4; // (int)ShipType.Battleship;
                     break;
                 case ShipType.Carrier:
-                    this.shipSize = (int)ShipType.Carrier;
+                    this.shipSize = 5; // (int)ShipType.Carrier;
                     break;
             }
 
