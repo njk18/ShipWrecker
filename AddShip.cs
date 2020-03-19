@@ -50,7 +50,7 @@ namespace ShipWrecker
                     for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition + 1, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
+                        Board.boards[gameID].getBattleGround()[xPosition + i, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
 
                     }
                 }
@@ -59,7 +59,7 @@ namespace ShipWrecker
                     for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + 1] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
                     }
                 }
 
@@ -81,14 +81,14 @@ namespace ShipWrecker
             {
                 if (shipRotation) //horizontal
                 {
-                    if (xPosition + i >= currentBoard.boardSize)
+                    if (xPosition + i >= currentBoard.boardSize && yPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition + i, yPosition].shipState != Ship.ShipState.noShip)
                         return false;
                 }
                 else
                 {
-                    if (yPosition + i >= currentBoard.boardSize)
+                    if (yPosition + i >= currentBoard.boardSize && xPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition, yPosition + i].shipState != Ship.ShipState.noShip)
                         return false;
