@@ -39,12 +39,14 @@ namespace ShipWrecker
 
             if (CheckShipPosition(s.shipSize, xPosition, yPosition, shipRotation, gameID) == false)
             {
+                Console.WriteLine("False Ship Position!");
                 response.addShipStatus = false;
                 var failResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(failResponse);
             }
             else
             {
+                Console.WriteLine("True Ship Position!");
                 if (shipRotation)
                 {
                     for (int i = 0; i < s.shipSize; i++)
@@ -76,25 +78,24 @@ namespace ShipWrecker
 
             Board currentBoard = Board.boards[gameID];
 
-            
             for (int i = 0; i < shipSize; i++)
             {
                 if (shipRotation) //horizontal
                 {
-                    if (xPosition + i >= currentBoard.boardSize || yPosition >= currentBoard.boardSize)
+                    if (xPosition + shipSize -1>= currentBoard.boardSize || yPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition + i, yPosition].shipState != Ship.ShipState.noShip)
                         return false;
                 }
                 else
                 {
-                    if (yPosition + i >= currentBoard.boardSize || xPosition >= currentBoard.boardSize)
+                    if (yPosition + shipSize -1>= currentBoard.boardSize || xPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition, yPosition + i].shipState != Ship.ShipState.noShip)
                         return false;
                 }
             }
             return true;
-        }
+            }
     }
 }
