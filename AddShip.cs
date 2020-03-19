@@ -81,14 +81,14 @@ namespace ShipWrecker
             {
                 if (shipRotation) //horizontal
                 {
-                    if (xPosition + i >= currentBoard.boardSize && yPosition >= currentBoard.boardSize)
+                    if (xPosition + i >= currentBoard.boardSize || yPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition + i, yPosition].shipState != Ship.ShipState.noShip)
                         return false;
                 }
                 else
                 {
-                    if (yPosition + i >= currentBoard.boardSize && xPosition >= currentBoard.boardSize)
+                    if (yPosition + i >= currentBoard.boardSize || xPosition >= currentBoard.boardSize)
                         return false;
                     else if (currentBoard.getBattleGround()[xPosition, yPosition + i].shipState != Ship.ShipState.noShip)
                         return false;
