@@ -27,6 +27,7 @@ namespace ShipWrecker
 
         public FireResponse()
         {
+            this.wonGame = false;
         }
 
         public void winGame()

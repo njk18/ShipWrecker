@@ -38,6 +38,7 @@ namespace ShipWrecker
                         response.state = Ship.ShipState.shipMiss ;
                         response.keepTurn = false;
                         response.wonGame = wonGame(currentBoard);
+                        
                         break;
                     }
                    
