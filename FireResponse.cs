@@ -14,20 +14,25 @@ namespace ShipWrecker
     public class FireResponse
     {
         public bool keepTurn { get; set; }
-        public Ship.ShipState state { get; set; }
-        public bool wonGame { get; set; }
 
-        public FireResponse(bool turn, Ship.ShipState state, bool wongame)
+        public bool wonGame;
+        public Ship.ShipState state { get; set; }
+
+        public FireResponse(bool turn, Ship.ShipState state)
         {
             this.keepTurn = turn;
+            this.wonGame = false;
             this.state = state;
-            this.wonGame = wongame;
         }
 
         public FireResponse()
         {
         }
 
+        public void winGame()
+        {
+            this.wonGame = true;
+        }
 
 
     }
