@@ -37,7 +37,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
                         response.keepTurn = false;
-
+                        response.wonGame = wonGame(currentBoard);
                         break;
                     }
                    
@@ -46,7 +46,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
                         response.keepTurn = false;
-
+                        response.wonGame = wonGame(currentBoard);
                         break;
                     }
 
@@ -58,7 +58,7 @@ namespace ShipWrecker
                          */
                         response.state = Ship.ShipState.shipHit;
                         response.keepTurn = true;
-
+                        response.wonGame = wonGame(currentBoard);
                         break;
                     }
                 case Ship.ShipState.shipMiss:
@@ -66,7 +66,7 @@ namespace ShipWrecker
                         // Return miss, you hit water!
                         response.state = Ship.ShipState.shipMiss;
                         response.keepTurn = true;
-
+                        response.wonGame = wonGame(currentBoard);
                         break;
                     }
 
@@ -75,6 +75,20 @@ namespace ShipWrecker
             // Return a JSON response
             var fireResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
             return (ActionResult)new OkObjectResult(fireResponse);
+        }
+
+        private static bool wonGame(Board currentBoard)
+        {
+           for(int i= 0; i < currentBoard.boardSize; i++)
+            {
+                for(int j =0; j < currentBoard.boardSize; j++)
+                {
+                    if (currentBoard.getBattleGround()[i, j].shipState == Ship.ShipState.ship)
+                        return false;
+                }
+           
+            }
+            return true;
         }
     }
 }

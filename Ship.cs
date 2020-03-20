@@ -55,16 +55,16 @@ namespace ShipWrecker
                     this.shipSize = 2;
                     break;
                 case ShipType.submarine:
-                    this.shipSize = 3; // (int)ShipType.Submarine;
+                    this.shipSize = 3; 
                     break;
                 case ShipType.cruiser:
-                    this.shipSize = 3; // (int)ShipType.Cruiser;
+                    this.shipSize = 3; 
                     break;
                 case ShipType.battleship:
-                    this.shipSize = 4; // (int)ShipType.Battleship;
+                    this.shipSize = 4; 
                     break;
                 case ShipType.carrier:
-                    this.shipSize = 5; // (int)ShipType.Carrier;
+                    this.shipSize = 5; 
                     break;
             }
 
