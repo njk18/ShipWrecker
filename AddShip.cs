@@ -61,7 +61,7 @@ namespace ShipWrecker
                     for (int i = 0; i < s.shipSize; i++)
                     {
 
-                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition , yPosition + i);
                     }
                 }
 
