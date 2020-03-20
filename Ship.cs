@@ -20,11 +20,11 @@ namespace ShipWrecker
 
         public enum ShipType
         {
-            Carrier,
-            Battleship,
-            Cruiser ,
-            Submarine ,
-            Destroyer 
+            carrier,
+            battleship,
+            cruiser,
+            submarine,
+            destroyer 
         }
 
         public enum ShipState
@@ -43,7 +43,7 @@ namespace ShipWrecker
 
         public Ship(bool shipRotation, string shipName, int x, int y)
         {
-            this.shipType = (ShipType)System.Enum.Parse(typeof(ShipType), shipName);
+            this.shipType = (ShipType)System.Enum.Parse(typeof(ShipType), shipName.ToLower());
             this.shipRotation = shipRotation;
             this.xPosition = x;
             this.yPosition = y;
@@ -51,19 +51,19 @@ namespace ShipWrecker
 
             switch (this.shipType)
             {
-                case ShipType.Destroyer:
+                case ShipType.destroyer:
                     this.shipSize = 2;
                     break;
-                case ShipType.Submarine:
+                case ShipType.submarine:
                     this.shipSize = 3; // (int)ShipType.Submarine;
                     break;
-                case ShipType.Cruiser:
+                case ShipType.cruiser:
                     this.shipSize = 3; // (int)ShipType.Cruiser;
                     break;
-                case ShipType.Battleship:
+                case ShipType.battleship:
                     this.shipSize = 4; // (int)ShipType.Battleship;
                     break;
-                case ShipType.Carrier:
+                case ShipType.carrier:
                     this.shipSize = 5; // (int)ShipType.Carrier;
                     break;
             }
