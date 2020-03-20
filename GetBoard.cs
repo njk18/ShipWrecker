@@ -20,24 +20,9 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for a specific board.");
 
             Guid gameID = new Guid(req.Query["gameID"]);
-            Ship[,] requestedBoard = Board.boards[gameID].getBattleGround();
+            Board requestedBoard = Board.boards[gameID];
 
-            int rowLength = requestedBoard.GetLength(0);
-            int colLength = requestedBoard.GetLength(1);
-            string boardArray = "";
-            for (int i = 0; i < rowLength; i++) {
-
-                for (int j = 0; j < colLength; j++)
-                {
-                    boardArray += string.Format("{0} ", requestedBoard[i, j]);
-                }
-
-                boardArray += System.Environment.NewLine + System.Environment.NewLine;
-
-            }
-
-
-            var response = JsonConvert.SerializeObject(boardArray, Formatting.Indented);
+            var response = JsonConvert.SerializeObject(requestedBoard.getBattleGround(), Formatting.Indented);
             return new OkObjectResult(response);
         }
     }
