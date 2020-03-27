@@ -27,14 +27,14 @@ namespace ShipWrecker
 
             if (sessionBoards == null || sessionBoards.Length == 0)
             {
-                sessionBoards[0] = new Board(boardSize);
+                sessionBoards[0] = new Board(boardSize, Board.playerType.playerOne);
                 gameSessionID = Guid.NewGuid();
 
             }
             else if(sessionBoards.Length == 1 && boardSize == sessionBoards[0].boardSize)
             {
 
-                sessionBoards[1] = new Board(boardSize);
+                sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
                 Board.boards.Add(gameSessionID, sessionBoards);
 
             }
