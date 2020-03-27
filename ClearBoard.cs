@@ -20,12 +20,21 @@ namespace ShipWrecker
             log.LogInformation("Clear a specific board given the gameID.");
 
             string name = req.Query["gameID"];
+            Board.playerType playerType;
             Guid gameID = new Guid(req.Query["gameID"]);
+            if (req.Query["playerType"].Equals("playerOne"))
+            {
+                playerType = Board.playerType.playerOne;
+                Board.boards[gameID][0] = new Board(Board.boards[gameID][0].boardSize,playerType);
+            }
+            else
+            {
+                playerType = Board.playerType.playerTwo;
+                Board.boards[gameID][1] = new Board(Board.boards[gameID][1].boardSize,playerType);
+            }
 
 
-            Board.boards[gameID] = new Board(Board.boards[gameID].boardSize);
-
-            return new OkObjectResult("Board cleared.");
+                return new OkObjectResult("Board cleared.");
         }
     }
 }

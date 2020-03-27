@@ -24,9 +24,23 @@ namespace ShipWrecker
             Guid gameID = Guid.Parse(req.Query["gameID"]);
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
-            int boardSize = Board.boards[gameID].boardSize;
-
-            Board currentBoard = Board.boards[gameID];
+            string player = req.Query["playerType"];
+            int boardSize;
+            Board.playerType playerT;
+            Board currentBoard;
+            if (player.Equals("playerOne"))
+            {
+                playerT = Board.playerType.playerOne;
+                boardSize = Board.boards[gameID][0].boardSize;
+                currentBoard = Board.boards[gameID][0];
+            }
+            else
+            {
+                playerT = Board.playerType.playerTwo;
+                boardSize = Board.boards[gameID][1].boardSize;
+                currentBoard = Board.boards[gameID][1];
+            }
+         
 
             response.keepTurn = true;
 
