@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using Newtonsoft.Json;
-using static ShipWrecker.Board;
 
 namespace ShipWrecker
 {
@@ -24,7 +23,7 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for AddShip.");
 
             Guid gameID = new Guid(req.Query["gameID"]);
-            string player = req.Query["playerType"];
+
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["x"]);
             int yPosition = Int32.Parse(req.Query["y"]);
@@ -38,7 +37,7 @@ namespace ShipWrecker
 
             Ship s = new Ship(shipRotation, shipType, xPosition, yPosition);
 
-            if (CheckShipPosition(player,s.shipSize, xPosition, yPosition, shipRotation, gameID) == false)
+            if (CheckShipPosition(s.shipSize, xPosition, yPosition, shipRotation, gameID) == false)
             {
                 Console.WriteLine("False Ship Position!");
                 response.addShipStatus = false;
@@ -52,11 +51,8 @@ namespace ShipWrecker
                 {
                     for (int i = 0; i < s.shipSize; i++)
                     {
-                        if(player.Equals("playerOne"))
-                        Board.boards[gameID][0].getBattleGround()[xPosition + i, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
-                        else
-                         Board.boards[gameID][1].getBattleGround()[xPosition + i, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
 
+                        Board.boards[gameID].getBattleGround()[xPosition + i, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
 
                     }
                 }
@@ -64,11 +60,8 @@ namespace ShipWrecker
                 {
                     for (int i = 0; i < s.shipSize; i++)
                     {
-                        if (player.Equals("playerOne"))
-                            Board.boards[gameID][0].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition , yPosition + i);
-                        else
-                            Board.boards[gameID][1].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition, yPosition + i);
 
+                        Board.boards[gameID].getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition , yPosition + i);
                     }
                 }
 
@@ -80,12 +73,10 @@ namespace ShipWrecker
             
         }
 
-          public static bool CheckShipPosition(string player,int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameID)
+          public static bool CheckShipPosition(int shipSize, int xPosition, int yPosition, bool shipRotation,  Guid gameID)
           {
-            Board currentBoard;
-            if (player.Equals("playerOne"))
-                currentBoard = Board.boards[gameID][0];
-            else currentBoard = Board.boards[gameID][1];
+
+            Board currentBoard = Board.boards[gameID];
 
             for (int i = 0; i < shipSize; i++)
             {
