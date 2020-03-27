@@ -24,11 +24,16 @@ namespace ShipWrecker
             log.LogInformation("Request for game session ID.");
 
             int boardSize = Int32.Parse(req.Query["boardSize"]);
+            GetGameIDResponse gameIDResponse = new GetGameIDResponse();
 
             if (sessionBoards == null || sessionBoards.Length == 0)
             {
                 sessionBoards[0] = new Board(boardSize, Board.playerType.playerOne);
                 gameSessionID = Guid.NewGuid();
+
+                // Prepare response
+                gameIDResponse.gameSessionID = gameSessionID;
+                gameIDResponse.player = Board.playerType.playerOne;
 
             }
             else if(sessionBoards.Length == 1 && boardSize == sessionBoards[0].boardSize)
@@ -36,6 +41,10 @@ namespace ShipWrecker
 
                 sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
                 Board.boards.Add(gameSessionID, sessionBoards);
+
+                // Prepare response
+                gameIDResponse.gameSessionID = gameSessionID;
+                gameIDResponse.player = Board.playerType.playerOne;
 
             }
             else if(sessionBoards.Length == 1 && boardSize != sessionBoards[0].boardSize)
@@ -48,7 +57,7 @@ namespace ShipWrecker
 
 
 
-            var response = JsonConvert.SerializeObject(gameSessionID);
+            var response = JsonConvert.SerializeObject(gameIDResponse);
 
             return new OkObjectResult(response);
         }
