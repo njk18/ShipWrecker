@@ -22,11 +22,21 @@ namespace ShipWrecker
             log.LogInformation("The player has hit a cell");
             FireResponse response = new FireResponse();
             Guid gameID = Guid.Parse(req.Query["gameID"]);
+            Board.playerType playerType = (Board.playerType)System.Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
-            int boardSize = Board.boards[gameID].boardSize;
+            int boardSize = Board.boards[gameID][0].boardSize;
 
-            Board currentBoard = Board.boards[gameID];
+            Board currentBoard = null;
+
+            if (playerType == Board.playerType.playerOne)
+            {
+                currentBoard = Board.boards[gameID][1];
+
+            } else if (playerType == Board.playerType.playerTwo)
+            {
+                currentBoard = Board.boards[gameID][0];
+            }
 
             response.keepTurn = true;
 
@@ -80,9 +90,9 @@ namespace ShipWrecker
 
         private static bool wonGame(Board currentBoard)
         {
-           for(int i= 0; i < currentBoard.boardSize; i++)
+           for(int i = 0; i < currentBoard.boardSize; i++)
             {
-                for(int j =0; j < currentBoard.boardSize; j++)
+                for(int j = 0; j < currentBoard.boardSize; j++)
                 {
                     if (currentBoard.getBattleGround()[i, j].shipState == Ship.ShipState.ship)
                         return false;
