@@ -15,7 +15,7 @@ namespace ShipWrecker
     class Board
     {
         // Map of all boards that are currently being used to play an instance of the game  
-        public static IDictionary<Guid, Board> boards = new Dictionary<Guid, Board>();
+        public static IDictionary<Guid, Board[]> boards = new Dictionary<Guid, Board[]>();
 
         public int boardSize { get; private set; }
 
