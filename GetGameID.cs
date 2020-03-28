@@ -41,7 +41,12 @@ namespace ShipWrecker
             {
 
                 sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
-                Board.boards.Add(gameSessionID, sessionBoards);
+
+                // Since we're passing by reference
+                Board[] boards = { sessionBoards[0], sessionBoards[1] };
+
+                // Now that we have two players, add the boards to the global boards Dictionary
+                Board.boards.Add(gameSessionID, boards);
 
                 // Prepare response
                 gameIDResponse.gameSessionID = gameSessionID;

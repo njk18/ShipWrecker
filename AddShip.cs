@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using Newtonsoft.Json;
 using static ShipWrecker.Board;
+using System.Collections.Generic;
 
 namespace ShipWrecker
 {
@@ -128,6 +129,7 @@ namespace ShipWrecker
                         return false;
                 }
             }
+
             return true;
         }
     }

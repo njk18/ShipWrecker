@@ -19,7 +19,7 @@ namespace ShipWrecker
 
         public Board(int boardSize, playerType player)
         {
-            this.boardSize = 8;
+            this.boardSize = boardSize;
             this.battleGround = new Ship[boardSize, boardSize];
             this.player = player;
             createBoard();
