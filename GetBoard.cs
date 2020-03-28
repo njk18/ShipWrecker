@@ -20,7 +20,19 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for a specific board.");
 
             Guid gameID = new Guid(req.Query["gameID"]);
-            Board requestedBoard = Board.boards[gameID];
+            Board.playerType playerType = (Board.playerType)System.Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
+
+
+            Board requestedBoard = null;
+
+            if (playerType == Board.playerType.playerOne)
+            {
+                requestedBoard = Board.boards[gameID][0];
+            }
+            else if (playerType == Board.playerType.playerTwo)
+            {
+                requestedBoard = Board.boards[gameID][1];
+            }
 
             var response = JsonConvert.SerializeObject(requestedBoard.getBattleGround(), Formatting.Indented);
             return new OkObjectResult(response);
