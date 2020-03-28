@@ -8,7 +8,7 @@ namespace ShipWrecker
     {
 
         public Guid gameSessionID { get; set; }
-        public Board.playerType player { get; set; }
+        public String player { get; set; }
 
 
     }

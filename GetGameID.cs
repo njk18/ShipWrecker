@@ -13,7 +13,7 @@ namespace ShipWrecker
     public static class GetGameID
     {
 
-        private static Guid gameSessionID;
+        private static Guid gameSessionID = Guid.Empty;
         private static Board[] sessionBoards = new Board[2];
 
         [FunctionName("GetGameID")]
@@ -26,17 +26,18 @@ namespace ShipWrecker
             int boardSize = Int32.Parse(req.Query["boardSize"]);
             GetGameIDResponse gameIDResponse = new GetGameIDResponse();
 
-            if (sessionBoards == null || sessionBoards.Length == 0)
+            if (sessionBoards[0] == null)
             {
+
                 sessionBoards[0] = new Board(boardSize, Board.playerType.playerOne);
                 gameSessionID = Guid.NewGuid();
 
                 // Prepare response
                 gameIDResponse.gameSessionID = gameSessionID;
-                gameIDResponse.player = Board.playerType.playerOne;
+                gameIDResponse.player = Enum.GetName(typeof(Board.playerType) ,Board.playerType.playerOne);
 
             }
-            else if(sessionBoards.Length == 1 && boardSize == sessionBoards[0].boardSize)
+            else if(sessionBoards[0] != null && boardSize == sessionBoards[0].boardSize)
             {
 
                 sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
@@ -44,18 +45,16 @@ namespace ShipWrecker
 
                 // Prepare response
                 gameIDResponse.gameSessionID = gameSessionID;
-                gameIDResponse.player = Board.playerType.playerOne;
+                gameIDResponse.player = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
+
+                // Clear the sessionBoard in order to create a new sessionBoard on the next call
+                Array.Clear(sessionBoards, 0, sessionBoards.Length);
 
             }
-            else if(sessionBoards.Length == 1 && boardSize != sessionBoards[0].boardSize)
+            else if(sessionBoards[0] != null && boardSize != sessionBoards[0].boardSize)
             {
                 // Not gonna happen for now
-            } else
-            {
-                gameSessionID = Guid.NewGuid();
             }
-
-
 
             var response = JsonConvert.SerializeObject(gameIDResponse);
 
