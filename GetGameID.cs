@@ -15,6 +15,7 @@ namespace ShipWrecker
 
         private static Guid gameSessionID = Guid.Empty;
         private static Board[] sessionBoards = new Board[2];
+        public static Board.playerType playerTurn;
 
         [FunctionName("GetGameID")]
         public static async Task<IActionResult> Run(
@@ -35,7 +36,7 @@ namespace ShipWrecker
                 // Prepare response
                 gameIDResponse.gameSessionID = gameSessionID;
                 gameIDResponse.player = Enum.GetName(typeof(Board.playerType) ,Board.playerType.playerOne);
-
+                playerTurn = Board.playerType.playerOne;
             }
             else if(sessionBoards[0] != null && boardSize == sessionBoards[0].boardSize)
             {

@@ -26,10 +26,15 @@ namespace ShipWrecker
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID][0].boardSize;
-
+            
             Board currentBoard = null;
-
-            if (playerType == Board.playerType.playerOne)
+            if (GetGameID.playerTurn != playerType) {
+                response.keepTurn = true;
+                // Return a JSON response
+                var fireRResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return (ActionResult)new OkObjectResult(fireRResponse);
+            }
+            if (playerType == Board.playerType.playerOne )
             {
                 currentBoard = Board.boards[gameID][1];
 
@@ -81,6 +86,14 @@ namespace ShipWrecker
                         break;
                     }
 
+            }
+            if (GetGameID.playerTurn == Board.playerType.playerOne && response.keepTurn == false)
+            {
+                GetGameID.playerTurn = Board.playerType.playerTwo;
+
+            } else if(GetGameID.playerTurn == Board.playerType.playerTwo && response.keepTurn == false)
+            {
+                GetGameID.playerTurn = Board.playerType.playerOne;
             }
             
             // Return a JSON response

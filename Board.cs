@@ -12,6 +12,7 @@ namespace ShipWrecker
         public static IDictionary<Guid, Board[]> boards = new Dictionary<Guid, Board[]>();
         public enum playerType { playerOne, playerTwo };
         public playerType player;
+  
         public int boardSize { get; private set; }
 
         // Create board which is a 2D array of Tiles
