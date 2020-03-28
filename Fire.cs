@@ -12,7 +12,8 @@ namespace ShipWrecker
 {
    public class Fire
     {
-        
+
+        private static Board.playerType playerTurn;
 
         [FunctionName("Fire")]
         public static async Task<IActionResult> Run(
@@ -28,12 +29,14 @@ namespace ShipWrecker
             int boardSize = Board.boards[gameID][0].boardSize;
             
             Board currentBoard = null;
-            if (GetGameID.playerTurn != playerType) {
+
+            if (playerTurn != playerType) {
                 response.keepTurn = true;
                 // Return a JSON response
-                var fireRResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
-                return (ActionResult)new OkObjectResult(fireRResponse);
+                var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return (ActionResult)new OkObjectResult(wrongPlayerResponse);
             }
+
             if (playerType == Board.playerType.playerOne )
             {
                 currentBoard = Board.boards[gameID][1];
@@ -87,13 +90,13 @@ namespace ShipWrecker
                     }
 
             }
-            if (GetGameID.playerTurn == Board.playerType.playerOne && response.keepTurn == false)
+            if (playerTurn == Board.playerType.playerOne && response.keepTurn == false)
             {
-                GetGameID.playerTurn = Board.playerType.playerTwo;
+                playerTurn = Board.playerType.playerTwo;
 
-            } else if(GetGameID.playerTurn == Board.playerType.playerTwo && response.keepTurn == false)
+            } else if(playerTurn == Board.playerType.playerTwo && response.keepTurn == false)
             {
-                GetGameID.playerTurn = Board.playerType.playerOne;
+                playerTurn = Board.playerType.playerOne;
             }
             
             // Return a JSON response
