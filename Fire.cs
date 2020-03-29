@@ -30,7 +30,7 @@ namespace ShipWrecker
             
             Board currentBoard = null;
 
-            if (response.playerTurn != Enum.GetName(typeof(Board.playerType), playerType) && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
+            if (response.playerTurn != Enum.GetName(typeof(Board.playerType), playerType) || AddShip.countPlayerOneShipAdded != 5 || AddShip.countPlayerTwoShipAdded != 5) {
                 // Return a JSON response
                 var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
