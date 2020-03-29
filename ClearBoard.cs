@@ -20,15 +20,16 @@ namespace ShipWrecker
             log.LogInformation("Clear a specific board given the gameID.");
 
             string name = req.Query["gameID"];
-            Board.playerType playerType;
+            Board.playerType playerType = (Board.playerType)Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
             Guid gameID = new Guid(req.Query["gameID"]);
-            if (req.Query["playerType"].Equals("playerOne"))
+
+            if (playerType == Board.playerType.playerOne)
             {
                 playerType = Board.playerType.playerOne;
                 AddShip.countPlayerOneShipAdded = 0;
                 Board.boards[gameID][0] = new Board(Board.boards[gameID][0].boardSize, playerType);
             }
-            else
+            else if(playerType == Board.playerType.playerTwo)
             {
                 AddShip.countPlayerTwoShipAdded = 0;
                 playerType = Board.playerType.playerTwo;
