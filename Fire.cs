@@ -30,7 +30,7 @@ namespace ShipWrecker
             
             Board currentBoard = null;
 
-            if (FireResponse.playerTurn != playerType && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
+            if (response.playerTurn != playerType && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
                 // Return a JSON response
                 var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
@@ -52,9 +52,9 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
-                        changeTurn();
                         response.wonGame = wonGame(currentBoard);
-                        
+                        changeTurn(response);
+
                         break;
                     }
                    
@@ -62,8 +62,9 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
-                        changeTurn();
                         response.wonGame = wonGame(currentBoard);
+                        changeTurn(response);
+
                         break;
                     }
 
@@ -74,16 +75,18 @@ namespace ShipWrecker
                          * 
                          */
                         response.state = Ship.ShipState.shipHit;
-                        keepTurn();
                         response.wonGame = wonGame(currentBoard);
+                        keepTurn(response);
+
                         break;
                     }
                 case Ship.ShipState.shipMiss:
                     {
                         // Return miss, you hit water!
                         response.state = Ship.ShipState.shipMiss;
-                        keepTurn();
                         response.wonGame = wonGame(currentBoard);
+                        keepTurn(response);
+
                         break;
                     }
 
@@ -94,27 +97,27 @@ namespace ShipWrecker
             return (ActionResult)new OkObjectResult(fireResponse);
         }
 
-        private static void changeTurn()
+        private static void changeTurn(FireResponse response)
         {
-            if (FireResponse.playerTurn == Board.playerType.playerOne)
+            if (response.playerTurn == Board.playerType.playerOne)
             {
-                FireResponse.playerTurn = Board.playerType.playerTwo;
+                response.playerTurn = Board.playerType.playerTwo;
             }
-            else if (FireResponse.playerTurn == Board.playerType.playerTwo)
+            else if (response.playerTurn == Board.playerType.playerTwo)
             {
-                FireResponse.playerTurn = Board.playerType.playerOne;
+                response.playerTurn = Board.playerType.playerOne;
             }
         }
 
-        private static void keepTurn()
+        private static void keepTurn(FireResponse response)
         {
-            if (FireResponse.playerTurn == Board.playerType.playerOne)
+            if (response.playerTurn == Board.playerType.playerOne)
             {
-                FireResponse.playerTurn = Board.playerType.playerTwo;
+                response.playerTurn = Board.playerType.playerTwo;
             }
-            else if (FireResponse.playerTurn == Board.playerType.playerTwo)
+            else if (response.playerTurn == Board.playerType.playerTwo)
             {
-                FireResponse.playerTurn = Board.playerType.playerOne;
+                response.playerTurn = Board.playerType.playerOne;
             }
         }
 

@@ -14,7 +14,7 @@ namespace ShipWrecker
     public class FireResponse
     {
      
-        public static Board.playerType playerTurn = Board.playerType.playerOne;
+        public Board.playerType playerTurn;
         public bool wonGame;
         public Ship.ShipState state { get; set; }
 
@@ -22,6 +22,7 @@ namespace ShipWrecker
         {
             this.wonGame = false;
             this.state = state;
+            this.playerTurn = Board.playerType.playerOne;
         }
 
         public FireResponse()
