@@ -13,7 +13,7 @@ namespace ShipWrecker
    public class Fire
     {
 
-        private static Board.playerType playerTurn;
+        public static Board.playerType playerTurn;
 
         [FunctionName("Fire")]
         public static async Task<IActionResult> Run(
