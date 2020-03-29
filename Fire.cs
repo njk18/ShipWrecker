@@ -68,7 +68,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
                         response.wonGame = wonGame(currentBoard);
-                        response.playerTurn = ChangeTurn(response);
+                        changeTurn(response);
 
                         break;
                     }
@@ -78,7 +78,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
                         response.wonGame = wonGame(currentBoard);
-                        response.playerTurn = ChangeTurn(response);
+                        changeTurn(response);
 
                         break;
                     }
@@ -91,7 +91,7 @@ namespace ShipWrecker
                          */
                         response.state = Ship.ShipState.shipHit;
                         response.wonGame = wonGame(currentBoard);
-                        response.playerTurn = keepTurn(response);
+                        keepTurn(response);
 
                         break;
                     }
@@ -100,7 +100,7 @@ namespace ShipWrecker
                         // Return miss, you hit water!
                         response.state = Ship.ShipState.shipMiss;
                         response.wonGame = wonGame(currentBoard);
-                        response.playerTurn = keepTurn(response);
+                        keepTurn(response);
 
                         break;
                     }
@@ -112,42 +112,38 @@ namespace ShipWrecker
             return (ActionResult)new OkObjectResult(fireResponse);
         }
 
-        private static String ChangeTurn(FireResponse response)
+        private static void changeTurn(FireResponse response)
         {
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
-
+           
             if (FireResponse.previousTurn == Board.playerType.playerOne)
             {
+                response.playerTurn = playerTwo;
                 FireResponse.previousTurn = Board.playerType.playerTwo;
-                return playerTwo;
             }
             else if (FireResponse.previousTurn == Board.playerType.playerTwo)
             {
+                response.playerTurn = playerOne;
                 FireResponse.previousTurn = Board.playerType.playerOne;
-                return playerOne;
             }
-            else return playerOne;
         }
 
-        private static String keepTurn(FireResponse response)
+        private static void keepTurn(FireResponse response)
         {
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
 
             if (FireResponse.previousTurn == Board.playerType.playerTwo)
             {
-
+                response.playerTurn = playerTwo;
                 FireResponse.previousTurn = Board.playerType.playerTwo;
-                return playerTwo;
             }
             else if (FireResponse.previousTurn == Board.playerType.playerOne)
             {
-
+                response.playerTurn = playerOne;
                 FireResponse.previousTurn = Board.playerType.playerOne;
-                return playerOne;
             }
-            else return playerOne;
         }
 
         private static bool wonGame(Board currentBoard)
