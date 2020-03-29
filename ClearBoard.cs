@@ -25,10 +25,12 @@ namespace ShipWrecker
             if (req.Query["playerType"].Equals("playerOne"))
             {
                 playerType = Board.playerType.playerOne;
+                AddShip.countPlayerOneShipAdded = 0;
                 Board.boards[gameID][0] = new Board(Board.boards[gameID][0].boardSize, playerType);
             }
             else
             {
+                AddShip.countPlayerTwoShipAdded = 0;
                 playerType = Board.playerType.playerTwo;
                 Board.boards[gameID][1] = new Board(Board.boards[gameID][1].boardSize, playerType);
             }

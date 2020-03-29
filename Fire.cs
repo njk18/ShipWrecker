@@ -13,7 +13,7 @@ namespace ShipWrecker
    public class Fire
     {
 
-        public static Board.playerType playerTurn;
+        
 
         [FunctionName("Fire")]
         public static async Task<IActionResult> Run(
@@ -30,8 +30,7 @@ namespace ShipWrecker
             
             Board currentBoard = null;
 
-            if (playerTurn != playerType) {
-                response.keepTurn = true;
+            if (FireResponse.playerTurn != playerType && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
                 // Return a JSON response
                 var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
@@ -46,7 +45,6 @@ namespace ShipWrecker
                 currentBoard = Board.boards[gameID][0];
             }
 
-            response.keepTurn = true;
 
             switch (currentBoard.getBattleGround()[xPosition, yPosition].shipState)
             {
@@ -54,7 +52,7 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
-                        response.keepTurn = false;
+                        changeTurn();
                         response.wonGame = wonGame(currentBoard);
                         
                         break;
@@ -64,7 +62,7 @@ namespace ShipWrecker
                     {
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
-                        response.keepTurn = false;
+                        changeTurn();
                         response.wonGame = wonGame(currentBoard);
                         break;
                     }
@@ -76,7 +74,7 @@ namespace ShipWrecker
                          * 
                          */
                         response.state = Ship.ShipState.shipHit;
-                        response.keepTurn = true;
+                        keepTurn();
                         response.wonGame = wonGame(currentBoard);
                         break;
                     }
@@ -84,24 +82,40 @@ namespace ShipWrecker
                     {
                         // Return miss, you hit water!
                         response.state = Ship.ShipState.shipMiss;
-                        response.keepTurn = true;
+                        keepTurn();
                         response.wonGame = wonGame(currentBoard);
                         break;
                     }
 
-            }
-            if (playerTurn == Board.playerType.playerOne && response.keepTurn == false)
-            {
-                playerTurn = Board.playerType.playerTwo;
-
-            } else if(playerTurn == Board.playerType.playerTwo && response.keepTurn == false)
-            {
-                playerTurn = Board.playerType.playerOne;
-            }
+            }   
             
             // Return a JSON response
             var fireResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
             return (ActionResult)new OkObjectResult(fireResponse);
+        }
+
+        private static void changeTurn()
+        {
+            if (FireResponse.playerTurn == Board.playerType.playerOne)
+            {
+                FireResponse.playerTurn = Board.playerType.playerTwo;
+            }
+            else if (FireResponse.playerTurn == Board.playerType.playerTwo)
+            {
+                FireResponse.playerTurn = Board.playerType.playerOne;
+            }
+        }
+
+        private static void keepTurn()
+        {
+            if (FireResponse.playerTurn == Board.playerType.playerOne)
+            {
+                FireResponse.playerTurn = Board.playerType.playerTwo;
+            }
+            else if (FireResponse.playerTurn == Board.playerType.playerTwo)
+            {
+                FireResponse.playerTurn = Board.playerType.playerOne;
+            }
         }
 
         private static bool wonGame(Board currentBoard)

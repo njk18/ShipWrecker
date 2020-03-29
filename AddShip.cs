@@ -14,7 +14,8 @@ namespace ShipWrecker
 {
     public static class AddShip
     {
-
+        public static int countPlayerOneShipAdded = 0;
+        public static int countPlayerTwoShipAdded = 0;
         //Test making change
         [FunctionName("addShip")]
         public static async Task<IActionResult> Run(
@@ -65,9 +66,9 @@ namespace ShipWrecker
                         }
 
                         currentBoard.getBattleGround()[xPosition + i, yPosition] = new Ship(shipRotation, shipType, xPosition + i, yPosition);
-
-
+                      
                     }
+                  
                 }
                 else
                 {
@@ -86,10 +87,18 @@ namespace ShipWrecker
 
 
                         currentBoard.getBattleGround()[xPosition, yPosition + i] = new Ship(shipRotation, shipType, xPosition, yPosition + i);
-
+                      
                     }
+                   
                 }
-
+                if (playerType == Board.playerType.playerOne)
+                {
+                    countPlayerOneShipAdded += 1;
+                }
+                else if (playerType == Board.playerType.playerTwo)
+                {
+                    countPlayerTwoShipAdded += 1;
+                }
 
                 response.addShipStatus = true;
                 var successResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
