@@ -26,7 +26,6 @@ namespace ShipWrecker
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID][0].boardSize;
-            FireResponse.previousTurn.Add(gameID, Board.playerType.playerTwo);
             Board currentBoard = null;
 
             if (FireResponse.previousTurn[gameID] == playerType) {
