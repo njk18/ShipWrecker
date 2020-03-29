@@ -23,7 +23,6 @@ namespace ShipWrecker
         {
             this.wonGame = false;
             this.state = state;
-
         }
 
         public FireResponse()

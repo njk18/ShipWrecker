@@ -19,19 +19,36 @@ namespace ShipWrecker
             ILogger log)
         {
             log.LogInformation("The player has hit a cell");
+
             FireResponse response = new FireResponse();
             Guid gameID = Guid.Parse(req.Query["gameID"]);
-            Board.playerType playerType = (Board.playerType)System.Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
+            Board.playerType playerType = (Board.playerType) Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID][0].boardSize;
             
             Board currentBoard = null;
 
-            if (FireResponse.previousTurn == playerType || AddShip.countPlayerOneShipAdded != 5 || AddShip.countPlayerTwoShipAdded != 5) {
+            if (FireResponse.previousTurn == playerType) {
+
+                if (playerType == Board.playerType.playerOne)
+                {
+                    response.playerTurn = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
+                } else if (playerType == Board.playerType.playerTwo)
+                {
+                    response.playerTurn = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
+                }
+
                 // Return a JSON response
                 var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
+            }
+
+            if(AddShip.countPlayerOneShipAdded != 5 || AddShip.countPlayerTwoShipAdded != 5)
+            {
+                // Return a JSON response
+                var errorResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
+                return (ActionResult)new OkObjectResult(errorResponse);
             }
 
             if (playerType == Board.playerType.playerOne )
