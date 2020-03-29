@@ -7,14 +7,14 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace ShipWrecker
 {
 
     public class FireResponse
     {
-
-        public static Board.playerType previousTurn = Board.playerType.playerTwo;
+        public static IDictionary<Guid, Board.playerType> previousTurn = new Dictionary<Guid, Board.playerType>();
         public String playerTurn;
         public bool wonGame;
         public Ship.ShipState state { get; set; }
@@ -28,6 +28,7 @@ namespace ShipWrecker
         public FireResponse()
         {
             this.wonGame = false;
+           
         }
 
         public void winGame()

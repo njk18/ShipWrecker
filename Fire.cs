@@ -26,10 +26,10 @@ namespace ShipWrecker
             int xPosition = Int32.Parse(req.Query["xPosition"]);
             int yPosition = Int32.Parse(req.Query["yPosition"]);
             int boardSize = Board.boards[gameID][0].boardSize;
-            
+            FireResponse.previousTurn.Add(gameID, Board.playerType.playerTwo);
             Board currentBoard = null;
 
-            if (FireResponse.previousTurn == playerType) {
+            if (FireResponse.previousTurn[gameID] == playerType) {
 
                 if (playerType == Board.playerType.playerOne)
                 {
@@ -68,7 +68,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipMiss;
                         response.state = Ship.ShipState.shipMiss ;
                         response.wonGame = wonGame(currentBoard);
-                        changeTurn(response);
+                        changeTurn(response, gameID);
 
                         break;
                     }
@@ -78,7 +78,7 @@ namespace ShipWrecker
                         currentBoard.getBattleGround()[xPosition, yPosition].shipState = Ship.ShipState.shipHit;
                         response.state = Ship.ShipState.shipHit;
                         response.wonGame = wonGame(currentBoard);
-                        changeTurn(response);
+                        changeTurn(response, gameID);
 
                         break;
                     }
@@ -91,7 +91,7 @@ namespace ShipWrecker
                          */
                         response.state = Ship.ShipState.shipHit;
                         response.wonGame = wonGame(currentBoard);
-                        keepTurn(response);
+                        keepTurn(response, gameID);
 
                         break;
                     }
@@ -100,7 +100,7 @@ namespace ShipWrecker
                         // Return miss, you hit water!
                         response.state = Ship.ShipState.shipMiss;
                         response.wonGame = wonGame(currentBoard);
-                        keepTurn(response);
+                        keepTurn(response, gameID);
 
                         break;
                     }
@@ -112,37 +112,37 @@ namespace ShipWrecker
             return (ActionResult)new OkObjectResult(fireResponse);
         }
 
-        private static void changeTurn(FireResponse response)
+        private static void changeTurn(FireResponse response, Guid gameID)
         {
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
            
-            if (FireResponse.previousTurn == Board.playerType.playerOne)
+            if (FireResponse.previousTurn[gameID] == Board.playerType.playerOne)
             {
                 response.playerTurn = playerTwo;
-                FireResponse.previousTurn = Board.playerType.playerTwo;
+                FireResponse.previousTurn[gameID] = Board.playerType.playerTwo;
             }
-            else if (FireResponse.previousTurn == Board.playerType.playerTwo)
+            else if (FireResponse.previousTurn[gameID] == Board.playerType.playerTwo)
             {
                 response.playerTurn = playerOne;
-                FireResponse.previousTurn = Board.playerType.playerOne;
+                FireResponse.previousTurn[gameID] = Board.playerType.playerOne;
             }
         }
 
-        private static void keepTurn(FireResponse response)
+        private static void keepTurn(FireResponse response, Guid gameID)
         {
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
 
-            if (FireResponse.previousTurn == Board.playerType.playerTwo)
+            if (FireResponse.previousTurn[gameID] == Board.playerType.playerTwo)
             {
                 response.playerTurn = playerTwo;
-                FireResponse.previousTurn = Board.playerType.playerTwo;
+                FireResponse.previousTurn[gameID] = Board.playerType.playerTwo;
             }
-            else if (FireResponse.previousTurn == Board.playerType.playerOne)
+            else if (FireResponse.previousTurn[gameID] == Board.playerType.playerOne)
             {
                 response.playerTurn = playerOne;
-                FireResponse.previousTurn = Board.playerType.playerOne;
+                FireResponse.previousTurn[gameID] = Board.playerType.playerOne;
             }
         }
 
