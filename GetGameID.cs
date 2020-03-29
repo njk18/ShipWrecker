@@ -65,8 +65,8 @@ namespace ShipWrecker
                 gameIDResponse.gameSessionID = gameSessionID;
                 gameIDResponse.player = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
 
-                // Clear the sessionBoard in order to create a new sessionBoard on the next call
-                Array.Clear(sessionBoards, 0, sessionBoards.Length);
+                // Clear the tmpSessionBoard in order to create a new tmpSessionBoard on the next call
+                tempSessionBoard = null;
 
             }
             else if(tempSessionBoard != null && boardSize != tempSessionBoard.boardSize)
