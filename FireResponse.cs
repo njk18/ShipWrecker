@@ -13,6 +13,8 @@ namespace ShipWrecker
 
     public class FireResponse
     {
+
+        public static Board.playerType previousTurn = Board.playerType.playerOne;
         public String playerTurn;
         public bool wonGame;
         public Ship.ShipState state { get; set; }

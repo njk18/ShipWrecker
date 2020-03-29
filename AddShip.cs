@@ -26,7 +26,7 @@ namespace ShipWrecker
             log.LogInformation("HTTP request for AddShip.");
 
             Guid gameID = new Guid(req.Query["gameID"]);
-            Board.playerType playerType = (Board.playerType)System.Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
+            Board.playerType playerType = (Board.playerType) Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
             string shipType = req.Query["shipType"];
             int xPosition = Int32.Parse(req.Query["x"]);
             int yPosition = Int32.Parse(req.Query["y"]);
