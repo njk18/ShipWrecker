@@ -30,7 +30,7 @@ namespace ShipWrecker
             
             Board currentBoard = null;
 
-            if (response.playerTurn != playerType && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
+            if (response.playerTurn != Enum.GetName(typeof(Board.playerType), playerType) && AddShip.countPlayerOneShipAdded != 5 && AddShip.countPlayerTwoShipAdded != 5) {
                 // Return a JSON response
                 var wrongPlayerResponse = JsonConvert.SerializeObject(response, Formatting.Indented);
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
@@ -99,25 +99,31 @@ namespace ShipWrecker
 
         private static void changeTurn(FireResponse response)
         {
-            if (response.playerTurn == Board.playerType.playerOne)
+            String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
+            String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
+
+            if (response.playerTurn == playerOne)
             {
-                response.playerTurn = Board.playerType.playerTwo;
+                response.playerTurn = playerTwo;
             }
-            else if (response.playerTurn == Board.playerType.playerTwo)
+            else if (response.playerTurn == playerTwo)
             {
-                response.playerTurn = Board.playerType.playerOne;
+                response.playerTurn = playerOne;
             }
         }
 
         private static void keepTurn(FireResponse response)
         {
-            if (response.playerTurn == Board.playerType.playerOne)
+            String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
+            String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
+
+            if (response.playerTurn == playerOne)
             {
-                response.playerTurn = Board.playerType.playerTwo;
+                response.playerTurn = playerTwo;
             }
-            else if (response.playerTurn == Board.playerType.playerTwo)
+            else if (response.playerTurn == playerTwo)
             {
-                response.playerTurn = Board.playerType.playerOne;
+                response.playerTurn = playerOne;
             }
         }
 
