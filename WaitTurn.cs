@@ -18,11 +18,11 @@ namespace ShipWrecker
             ILogger log)
         {
             log.LogInformation("Block till it is the requestin player's turn.");
-
+            Guid gameID = Guid.Parse(req.Query["gameID"]);
             Board.playerType playerType = (Board.playerType)System.Enum.Parse(typeof(Board.playerType), req.Query["playerType"]);
 
             // Block till the previousTurn changes
-            while (FireResponse.previousTurn == playerType) { };
+            while (FireResponse.previousTurn[gameID] == playerType) { };
 
             return new OkObjectResult(true);
         }
