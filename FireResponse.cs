@@ -14,7 +14,7 @@ namespace ShipWrecker
     public class FireResponse
     {
 
-        public static Board.playerType previousTurn = Board.playerType.playerOne;
+        public static Board.playerType previousTurn = Board.playerType.playerTwo;
         public String playerTurn;
         public bool wonGame;
         public Ship.ShipState state { get; set; }
@@ -23,14 +23,12 @@ namespace ShipWrecker
         {
             this.wonGame = false;
             this.state = state;
-            this.playerTurn = Enum.GetName(typeof(Board.playerType), previousTurn);
 
         }
 
         public FireResponse()
         {
             this.wonGame = false;
-            this.playerTurn = Enum.GetName(typeof(Board.playerType), previousTurn); 
         }
 
         public void winGame()

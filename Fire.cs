@@ -97,10 +97,9 @@ namespace ShipWrecker
 
         private static void changeTurn(FireResponse response)
         {
-
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
-
+           
             if (FireResponse.previousTurn == Board.playerType.playerOne)
             {
                 response.playerTurn = playerTwo;
@@ -118,12 +117,12 @@ namespace ShipWrecker
             String playerOne = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
             String playerTwo = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
 
-            if (FireResponse.previousTurn == Board.playerType.playerOne)
+            if (FireResponse.previousTurn == Board.playerType.playerTwo)
             {
                 response.playerTurn = playerTwo;
                 FireResponse.previousTurn = Board.playerType.playerTwo;
             }
-            else if (FireResponse.previousTurn == Board.playerType.playerTwo)
+            else if (FireResponse.previousTurn == Board.playerType.playerOne)
             {
                 response.playerTurn = playerOne;
                 FireResponse.previousTurn = Board.playerType.playerOne;
