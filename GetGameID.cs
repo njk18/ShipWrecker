@@ -14,6 +14,7 @@ namespace ShipWrecker
     {
 
         private static Guid tempGameSessionID = Guid.Empty;
+        private static Board tempSessionBoard;
 
         [FunctionName("GetGameID")]
         public static async Task<IActionResult> Run(
@@ -24,26 +25,28 @@ namespace ShipWrecker
 
             int boardSize = Int32.Parse(req.Query["boardSize"]);
             GetGameIDResponse gameIDResponse = new GetGameIDResponse();
-            Board[] sessionBoards = new Board[2];
-            // Because we cannot pass a static field, since it is pass by reference, all game sessions in the dictionary will have the latest generated Guid
-            Guid gameSessionID = Guid.Empty;
 
 
-
-            if (sessionBoards[0] == null)
+            if (tempSessionBoard == null)
             {
 
-                sessionBoards[0] = new Board(boardSize, Board.playerType.playerOne);
+                tempSessionBoard = new Board(boardSize, Board.playerType.playerOne);
                 tempGameSessionID = Guid.NewGuid();
+                
 
                 // Prepare response
                 gameIDResponse.gameSessionID = tempGameSessionID;
                 gameIDResponse.player = Enum.GetName(typeof(Board.playerType) ,Board.playerType.playerOne);
 
             }
-            else if(sessionBoards[0] != null && boardSize == sessionBoards[0].boardSize)
+            else if(tempSessionBoard != null && boardSize == tempSessionBoard.boardSize)
             {
 
+                // Because we cannot pass a static field, since it is pass by reference, all game sessions in the dictionary will have the latest generated Guid
+                Guid gameSessionID = Guid.Empty;
+                Board[] sessionBoards = new Board[2];
+
+                sessionBoards[0] = tempSessionBoard;
                 sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
 
                 gameSessionID = tempGameSessionID;
@@ -66,7 +69,7 @@ namespace ShipWrecker
                 Array.Clear(sessionBoards, 0, sessionBoards.Length);
 
             }
-            else if(sessionBoards[0] != null && boardSize != sessionBoards[0].boardSize)
+            else if(tempSessionBoard != null && boardSize != tempSessionBoard.boardSize)
             {
                 // Not gonna happen for now
             }
