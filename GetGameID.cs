@@ -52,9 +52,6 @@ namespace ShipWrecker
                 gameIDResponse.gameSessionID = gameSessionID;
                 gameIDResponse.player = Enum.GetName(typeof(Board.playerType), Board.playerType.playerTwo);
 
-                // Set turn to playerOne
-                Fire.playerTurn = Board.playerType.playerOne;
-
                 // Clear the sessionBoard in order to create a new sessionBoard on the next call
                 Array.Clear(sessionBoards, 0, sessionBoards.Length);
 
