@@ -23,13 +23,11 @@ namespace ShipWrecker
         {
             this.wonGame = false;
             this.state = state;
-            this.playerTurn = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
         }
 
         public FireResponse()
         {
             this.wonGame = false;
-            this.playerTurn = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
         }
 
         public void winGame()
