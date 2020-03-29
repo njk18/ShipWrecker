@@ -13,8 +13,7 @@ namespace ShipWrecker
     public static class GetGameID
     {
 
-        private static Guid gameSessionID = Guid.Empty;
-        private static Board[] sessionBoards = new Board[2];
+        private static Guid tempGameSessionID = Guid.Empty;
 
         [FunctionName("GetGameID")]
         public static async Task<IActionResult> Run(
@@ -25,15 +24,20 @@ namespace ShipWrecker
 
             int boardSize = Int32.Parse(req.Query["boardSize"]);
             GetGameIDResponse gameIDResponse = new GetGameIDResponse();
+            Board[] sessionBoards = new Board[2];
+            // Because we cannot pass a static field, since it is pass by reference, all game sessions in the dictionary will have the latest generated Guid
+            Guid gameSessionID = Guid.Empty;
+
+
 
             if (sessionBoards[0] == null)
             {
 
                 sessionBoards[0] = new Board(boardSize, Board.playerType.playerOne);
-                gameSessionID = Guid.NewGuid();
+                tempGameSessionID = Guid.NewGuid();
 
                 // Prepare response
-                gameIDResponse.gameSessionID = gameSessionID;
+                gameIDResponse.gameSessionID = tempGameSessionID;
                 gameIDResponse.player = Enum.GetName(typeof(Board.playerType) ,Board.playerType.playerOne);
 
             }
@@ -41,6 +45,8 @@ namespace ShipWrecker
             {
 
                 sessionBoards[1] = new Board(boardSize, Board.playerType.playerTwo);
+
+                gameSessionID = tempGameSessionID;
 
                 // Since we're passing by reference
                 Board[] boards = { sessionBoards[0], sessionBoards[1] };
