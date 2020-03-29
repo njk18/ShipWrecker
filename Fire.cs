@@ -44,7 +44,8 @@ namespace ShipWrecker
                 return (ActionResult)new OkObjectResult(wrongPlayerResponse);
             }
 
-            if(AddShip.countPlayerOneShipAdded != 5 || AddShip.countPlayerTwoShipAdded != 5)
+            // check playerOne (index 0) and playerTwo (index 1) ship count
+            if(AddShip.counters[gameID][0] != 5 || AddShip.counters[gameID][1] != 5)
             {
                 // Return a JSON response
                 var errorResponse = JsonConvert.SerializeObject(response, Formatting.Indented);

@@ -47,6 +47,10 @@ namespace ShipWrecker
 
                 // Now that we have two players, add the boards to the global boards Dictionary
                 Board.boards.Add(gameSessionID, boards);
+                // And we can now also initialize the previous turn to playerTwo, and the ship counters for each player to 0
+                FireResponse.previousTurn.Add(gameSessionID, Board.playerType.playerTwo);
+                int[] counts = { 0, 0 };
+                AddShip.counters.Add(gameSessionID,  counts);
 
                 // Prepare response
                 gameIDResponse.gameSessionID = gameSessionID;

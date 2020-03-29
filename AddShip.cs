@@ -14,8 +14,10 @@ namespace ShipWrecker
 {
     public static class AddShip
     {
-        public static int countPlayerOneShipAdded = 0;
-        public static int countPlayerTwoShipAdded = 0;
+
+        // 0: countPlayerOneShipAdded, 1: countPlayerTwoShipAdded
+        public static IDictionary<Guid, int[]> counters = new Dictionary<Guid, int[]>();
+
         //Test making change
         [FunctionName("addShip")]
         public static async Task<IActionResult> Run(
@@ -93,11 +95,11 @@ namespace ShipWrecker
                 }
                 if (playerType == Board.playerType.playerOne)
                 {
-                    countPlayerOneShipAdded += 1;
+                    counters[gameID][0] += 1;
                 }
                 else if (playerType == Board.playerType.playerTwo)
                 {
-                    countPlayerTwoShipAdded += 1;
+                    counters[gameID][1] += 1;
                 }
 
                 response.addShipStatus = true;

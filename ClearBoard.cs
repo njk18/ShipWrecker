@@ -26,12 +26,12 @@ namespace ShipWrecker
             if (playerType == Board.playerType.playerOne)
             {
                 playerType = Board.playerType.playerOne;
-                AddShip.countPlayerOneShipAdded = 0;
+                AddShip.counters[gameID][0] = 0;
                 Board.boards[gameID][0] = new Board(Board.boards[gameID][0].boardSize, playerType);
             }
             else if(playerType == Board.playerType.playerTwo)
             {
-                AddShip.countPlayerTwoShipAdded = 0;
+                AddShip.counters[gameID][1] = 0;
                 playerType = Board.playerType.playerTwo;
                 Board.boards[gameID][1] = new Board(Board.boards[gameID][1].boardSize, playerType);
             }
