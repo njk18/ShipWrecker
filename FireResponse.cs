@@ -21,7 +21,7 @@ namespace ShipWrecker
         {
             this.wonGame = false;
             this.state = state;
-            this.playerTurn = Board.playerType.playerOne;
+            this.playerTurn = Enum.GetName(typeof(Board.playerType), Board.playerType.playerOne);
         }
 
         public FireResponse()
